@@ -25,25 +25,27 @@ const displayInfo = () => {
     wrapContent.append(containedText, showEditBtn, showDelBtn)
 
     const contentContainer = document.createElement('div');
+
+    
+    if(!localStorage.getItem('content')){
+        const memoryObj = {
+            id: 1,
+            containedText: getText
+        }
+        wrapContent.setAttribute('id', 'container1')
+        contentContainer.setAttribute('id', 'content1')
+        containedText.setAttribute('id', 'text1')
+        showDelBtn.setAttribute('id', 'del1')
+        showEditBtn.setAttribute('id', 'edit1')
+        
+        const jsonMemoryObj = JSON.stringify(memoryObj)
+        localStorage.setItem('content', jsonMemoryObj)
+    }
+
     contentContainer.append(wrapContent)
 
     const parentContainer = document.querySelector('#parentContainer');
     parentContainer.append(contentContainer); 
-    
-    // if(!localStorage.getItem('content')){
-    //     const memoryObj = {
-    //         id: 1,
-    //         containedText: containedText
-    //     }
-    //     wrapContent.setAttribute('id', 'container1')
-    //     contentContainer.setAttribute('id', 'content1')
-    //     containedText.setAttribute('id', 'text1')
-    //     showDelBtn.setAttribute('id', 'del1')
-    //     showEditBtn.setAttribute('id', 'edit1')
-        
-    //     const jsonMemoryObj
-    //     localStorage.setItem('content')
-    // }
 
 
 }
@@ -51,3 +53,13 @@ const displayInfo = () => {
 clickBtn.addEventListener('click', displayInfo)
 
 
+const deleteAllBtn = document.querySelector('#deleteAll')
+
+deleteAllBtn.addEventListener('click', () => {
+    const confirmChoice = confirm('Are you sure you want to delete all items?')
+    console.log(confirmChoice)
+
+    if(confirmChoice){
+        alert('everything has been deleted')
+    }
+})
