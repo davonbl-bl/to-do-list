@@ -8,7 +8,7 @@ const clickBtn = document.querySelector('#clickBtn');
 // When submiting a text
 const displayInfo = () => {
     let getText = typeHere.value
-    console.log(getText)
+    // console.log(getText)
 
     let containedText = document.createElement('p');
     containedText.innerText = getText;
@@ -18,7 +18,7 @@ const displayInfo = () => {
     const showDelBtn = document.createElement('button');
     showDelBtn.innerText = 'Delete';
 
-    const showEditBtn = document.createElement('button');
+    let showEditBtn = document.createElement('button');
     showEditBtn.innerText = 'Edit';
 
 
@@ -46,15 +46,26 @@ const displayInfo = () => {
 
     contentContainer.append(wrapContent)
 
-    showEditBtn.addEventListener('click', () => {
-        console.log('testing edit button')
-        showEditBtn.innerText = 'Update'
-        containedText = document.createElement('input')
-        containedText.innerText = getText
+    let updateBtn = document.createElement('button');
+    updateBtn.setAttribute('id', 'update1')
+    updateBtn.innerText = 'Update'
 
-        showEditBtn.addEventListener('click', () => {
-            console.log('testing')
-        })
+    let inputEditText = document.createElement('input')
+    inputEditText.setAttribute('value',getText)
+    inputEditText.setAttribute('id', 'editHere1')
+
+    showEditBtn.addEventListener('click', () => {
+        wrapContent.replaceChild(inputEditText, wrapContent.childNodes[0])
+        wrapContent.replaceChild(updateBtn,wrapContent.childNodes[1])
+    })
+
+    updateBtn.addEventListener('click', () => {
+        let updatedText = inputEditText.value
+        containedText.innerText = updatedText
+        wrapContent.replaceChild(containedText, wrapContent.childNodes[0])
+        wrapContent.replaceChild(showEditBtn,wrapContent.childNodes[1])
+        // console.log(containedText.innerText)
+        // console.log('testing')
     })
 
     const parentContainer = document.querySelector('#parentContainer');
@@ -70,17 +81,19 @@ const deleteAllBtn = document.querySelector('#deleteAll')
 
 deleteAllBtn.addEventListener('click', () => {
     const confirmChoice = confirm('Are you sure you want to delete all items?')
-    console.log(confirmChoice)
+    // console.log(confirmChoice)
     const removeAllChildren = document.querySelector('#parentContainer');
     // why do I keep on getting true? 
     // console.log(removeAllChildren.hasChildNodes())
     let getChildElementsLength = removeAllChildren.children.length
-    if(getChildElementsLength > 0){
-        alert('everything has been deleted')
-        while(removeAllChildren.hasChildNodes()){
-            removeAllChildren.removeChild(removeAllChildren.firstChild);
-        }
+    if(localStorage.getItem('content')){
         localStorage.clear();
+        if(getChildElementsLength > 0){
+            while(removeAllChildren.hasChildNodes()){
+                removeAllChildren.removeChild(removeAllChildren.firstChild);
+            }
+        }
+        alert('everything has been deleted')
     }else{
         alert("there's nothing to be deleted")
     }
