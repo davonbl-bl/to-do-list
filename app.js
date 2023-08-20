@@ -64,12 +64,10 @@ const displayInfo = () => {
         containedText.innerText = updatedText
         wrapContent.replaceChild(containedText, wrapContent.childNodes[0])
         wrapContent.replaceChild(showEditBtn,wrapContent.childNodes[1])
-
         // memoryObj = [{
         //     id: 1,
         //     containedText: getText
         // }]
-
         let changeContent = JSON.parse(localStorage.getItem('content'))
         changeContent[0].containedText = updatedText
         localStorage.setItem('content', JSON.stringify(changeContent))
